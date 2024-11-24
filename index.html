@@ -5,19 +5,10 @@
 <div class="chart-container"></div>
 
 <script>
-  // Load the data for the organizational chart
+  // This is the data used - https://github.com/bumbeishvili/sample-data/blob/main/data-oracle.csv
   d3.csv(
     'https://raw.githubusercontent.com/bumbeishvili/sample-data/main/data-oracle.csv'
   ).then((data) => {
-    // Adding an admin assistant sub-node to a specific node
-    data.push({
-      id: 'admin_assistant_1', // Unique ID for the assistant
-      name: 'Admin Assistant',
-      position: 'Administrative Assistant',
-      parentId: '1', // The ID of the person the assistant is reporting to (replace '1' with the actual parent node ID)
-      image: 'https://example.com/admin_assistant_image.jpg', // Optional: Add an image URL for the assistant
-    });
-
     new d3.OrgChart()
       .nodeHeight((d) => 85 + 25)
       .nodeWidth((d) => 220 + 2)
@@ -56,3 +47,4 @@
       .render();
   });
 </script>
+
