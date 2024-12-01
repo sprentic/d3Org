@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      .node-container {
+        position: relative;
+        border: 1px solid lightgray;
+        background-color: #d7f0f9; /* 90% opacity */
+      }
+
+      .vertical-stripe {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        background-color: #3ab6e3;
+        width: 10px;
+        border-radius: 1px;
+      }
+
+      .node-content {
+        padding: 20px;
+        padding-top: 35px;
+        text-align: center;
+        margin-left: 15px; /* Adjusted to avoid overlap with the stripe */
+      }
+
+      .node-image {
+        margin-top: -30px;
+        border-radius: 100px;
+        width: 60px;
+        height: 60px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-org-chart@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-flextree@2.1.2/build/d3-flextree.js"></script>
+    <div
+      class="chart-container"
+      style="height: 1200px; background-color: #f6f6f6"
+    ></div>
+
+    <script>
+      var chart;
+      d3.csv(
+        'https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv'
+      ).then((dataFlattened) => {
+        chart = new d3.OrgChart()
+          .container('.chart-container')
+          .data(dataFlattened)
+          .nodeWidth((d) => 250)
+          .initialZoom(0.7)
+          .nodeHeight((d) => 175)
+          .childrenMargin((d) => 40)
+          .compactMarginBetween((d) => 15)
+          .compactMarginPair((d) => 80)
+          .nodeContent(function (d, i, arr, state) {
+            return `
+            <div style="padding-top:30px;background-color:none;margin-left:1px;height:${
+              d.height
+            }px;border-radius:2px;overflow:visible">
+              <div class="node-container" style="height:${
+                d.height - 32
+              }px;padding-top:0px;">
+
+                <!-- Vertical blue stripe -->
+                <div class="vertical-stripe" style="height:${
+                  d.height - 32
+                }px;"></div>
+
+                <!-- Image -->
+                <img src="${
+                  d.data.imageUrl
+                }" class="node-image" style="margin-left:${d.width / 2 - 25}px;" />
+
+               <div style="margin-right:10px;margin-top:15px;float:right">${
+                 d.data.id
+               }</div>
+
+               <!-- Content -->
+               <div class="node-content">
+                   <div style="color:#111672;font-size:16px;font-weight:bold"> ${
+                     d.data.name
+                   } </div>
+                   <div style="color:#404040;font-size:16px;margin-top:4px"> ${
+                     d.data.positionName
+                   } </div>
+               </div>
+               <div style="display:flex;justify-content:space-between;padding-left:15px;padding-right:15px;">
+                 <div> Manages:  ${d.data._directSubordinates} 👤</div>
+                 <div> Oversees: ${d.data._totalSubordinates} 👤</div>
+               </div>
+              </div>
+            </div>
+      `;
+          })
+          .render();
+      });
+    </script>
+  </body>
+</html>
