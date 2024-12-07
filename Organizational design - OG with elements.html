@@ -21,14 +21,16 @@
     <script src="https://cdn.jsdelivr.net/npm/d3-org-chart@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3-flextree@2.1.2/build/d3-flextree.js"></script>
 
-    const mySvg = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" xml:space="preserve">
-      <path style="fill:none;stroke:#716E7B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" d="M28 16h.16a9 9 0 0 1 8.672 6.591l2 7.197a2.2 2.2 0 0 1-1.68 2.745l-1.168.238M28 36h4v9a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2z"/>
-      <circle style="fill:none;stroke:#716E7B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" cx="26" cy="8" r="5"/>
-      <path style="fill:none;stroke:#716E7B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" d="M16 32V20.5c0-2.481 2.018-4.5 4.5-4.5.097 0 .175-.003.9 0 1.543.007 2.784.004 3.6 0v19-2 11.667"/>
-      <path style="fill:none;stroke:#716E7B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" d="M16 32a2 2 0 1 0 4 0m5 12.5a2.5 2.5 0 1 1-5 0V23m8-7v20h8.609L33 23"/>
-    </svg>
-        
+    <script>
+      const mySvg = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" xml:space="preserve" height="12px">
+        <path style="fill:none;stroke:#716E7B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" d="M28 16h.16a9 9 0 0 1 8.672 6.591l2 7.197a2.2 2.2 0 0 1-1.68 2.745l-1.168.238M28 36h4v9a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2z"/>
+        <circle style="fill:none;stroke:#716E7B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" cx="26" cy="8" r="5"/>
+        <path style="fill:none;stroke:#716E7B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" d="M16 32V20.5c0-2.481 2.018-4.5 4.5-4.5.097 0 .175-.003.9 0 1.543.007 2.784.004 3.6 0v19-2 11.667"/>
+        <path style="fill:none;stroke:#716E7B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" d="M16 32a2 2 0 1 0 4 0m5 12.5a2.5 2.5 0 1 1-5 0V23m8-7v20h8.609L33 23"/>
+      </svg>
+    `;
+
     <div
       class="chart-container"
       style="height: 1200px; background-color: #f6f6f6"
@@ -78,8 +80,8 @@
                 } </div>
                </div>  
                <div style="display:flex;justify-content:space-between;padding-left:15px;padding-right:15px;">
-                <div > Manages:  ${d.data._directSubordinates} 👤</div>  
-                <div > Oversees: ${d.data._totalSubordinates} 👤</div>  
+                <div > Manages:  ${d.data._directSubordinates} ${mySvg}</div>  
+                <div > Oversees: ${d.data._totalSubordinates} ${mySvg}</div>  
                </div>
               </div>  
       </div>
