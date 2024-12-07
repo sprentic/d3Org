@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <!-- Include Google Fonts CSS for Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <style>
       /* Apply the Inter font to the entire body */
       body {
@@ -45,7 +45,7 @@
           .data(dataFlattened)
           .nodeWidth((d) => 225)
           .initialZoom(0.7)
-          .nodeHeight((d) => 260)
+          .nodeHeight((d) => 250)
           .childrenMargin((d) => 40)
           .compactMarginBetween((d) => 15)
           .compactMarginPair((d) => 80)
@@ -67,22 +67,24 @@
                }</div>
   
                <div style="padding: 10px 20px; text-align: center;">
-                <div style="color:#111672;font-size:16px;font-weight:bold"> ${
+                <div style="color:#716E7B;font-size:14px;font-weight:500"> ${
                 d.data.name
                 } </div>
-               </div>
-               <div style="text-align: center; margin-bottom: 50px; color:#404040;font-size:16px;"> ${
+                <div style="color:#716E7B;font-size:9px;font-weight:400;margin-top:4px"> ${
                 d.data.positionName
-               }</div>
-               <div style="position: absolute; bottom: 8px; left: 8px; width: 90px; height: 30px; background-color: #eeedef; border-radius: 4px; padding: 4px 2px 0 2px;">
+                } </div>
+                <div style="padding: 3px 0px;color:#716E7B;font-size:9px;font-weight:400;">
+                 Boston - Seaport </div>
+                
+               </div>
+              <div style="position: absolute; bottom: 8px; left: 8px; width: 90px; height: 30px; background-color: #eeedef; border-radius: 4px; padding: 4px 2px 0 2px;">
                 <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;">${mySvg}</span>Grade: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
                 <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;">${mySvg}</span>Tenure: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
-               </div>
-               <div style="position: absolute; bottom: 8px; right: 8px; width: 90px; height: 30px; background-color: #eeedef; border-radius: 4px; padding: 4px 2px 0 2px;">
+              </div>
+              <div style="position: absolute; bottom: 8px; right: 8px; width: 90px; height: 30px; background-color: #eeedef; border-radius: 4px; padding: 4px 2px 0 2px;">
                 <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;">${mySvg}</span>Team Size: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
                 <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;">${mySvg}</span>Diversity: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
-               </div>
-              </div>  
+              </div>
       </div>
   `;
           })
