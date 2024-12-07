@@ -60,17 +60,13 @@
 
                 <img src="${
                 d.data.imageUrl
-                }" style="margin-top:-30px;margin-left:${d.width / 2 - 30}px;border-radius:100px;width:60px;height:60px;" />
+                }" style="margin-top:50px;margin-left:${d.width / 2 - 30}px;border-radius:100px;width:60px;height:60px;" />
 
                <div style="margin-right:10px;margin-top:15px;float:right">${
                 d.data.id
                }</div>
   
-               <div style="margin-top:-30px;background-color:#3AB6E3;height:10px;width:${
-                d.width - 2
-               }px;border-radius:4px"></div>
-
-               <div style="padding:20px; padding-top:35px;text-align:center">
+               <div style="padding:20px; padding-top:7px;text-align:center">
                 <div style="color:#111672;font-size:16px;font-weight:bold"> ${
                 d.data.name
                 } </div>
@@ -79,9 +75,12 @@
                 } </div>
                </div>  
                <div style="display:flex;justify-content:space-between;padding-left:15px;padding-right:15px;">
-                <div > Manages:  ${d.data._directSubordinates} ${mySvg}</div>  
-                <div > Oversees: ${d.data._totalSubordinates} ${mySvg}</div>  
                </div>
+               <div style="position: absolute; bottom: 8px; left: 8px; width: 100px; height: 40px; background-color: #eeedef; border-radius: 4px; padding: 6px 2px 0 2px;">
+                <div style="display: flex; align-items: center;">${mySvg}Manages: ${d.data._directSubordinates}</div>
+                <div style="margin-top: 5px;display: flex; align-items: center;">${mySvg}Tanages: ${d.data._directSubordinates}</div>
+               </div>
+               <div style="position: absolute; bottom: 8px; right: 8px; width: 100px; height: 40px; background-color: #eeedef; border-radius: 4px;"></div>
               </div>  
       </div>
   `;
