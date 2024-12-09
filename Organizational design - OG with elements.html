@@ -51,13 +51,9 @@
 
                 <img src="${
                 d.data.imageUrl
-                }" style="margin-top:50px;margin-left:${d.width / 2 - 30}px;border-radius:100px;width:60px;height:60px;" />
+                }" style="position: absolute; top: 30%; left: ${d.width / 2 - 30}px; transform: translateY(+25%); border-radius:100px;width:60px;height:60px;" />
 
-               <div style="margin-right:10px;margin-top:15px;float:right">${
-                d.data.id
-               }</div>
-  
-               <div style="padding: 10px 20px; text-align: center;">
+               <div style="padding: 10px 20px; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, 20px); width: 100%;">
                 <div style="color:#716E7B;font-size:14px;font-weight:500"> ${
                 d.data.name
                 } </div>
@@ -68,10 +64,10 @@
                 <span style="margin-left: 4px;">Boston - Seaport</span></div>
   
                </div>
-               <div style="position: absolute; top: 40px; right: 1px; width: 150px; height: 24px; background-color: #00AB8E; padding-left: 20px; display: flex; align-items: center; color: white; font-size: 9px; font-weight: 400;">
-                 CRM - Delivery
+               <div style="position: absolute; top: 40px; right: 0; width: 150px; height: 24px; background-color: #00AB8E; padding-left: 20px; display: flex; align-items: center; color: white; font-size: 9px; font-weight: 400;">
+                CRM - Delivery
                </div>
-               <img src="https://sprentic.github.io/d3Org/Images/spain.svg" style="position: absolute; top: 40px; left: 10px; width:20px; height: 20px;">
+               <img src="https://sprentic.github.io/d3Org/Images/spain2.svg" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); width:40px; height:35px;">
               <div style="position: absolute; bottom: 8px; left: 8px; width: 90px; height: 30px; background-color: #eeedef; border-radius: 4px; padding: 4px 2px 0 2px;">
                 <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px; Margin-bottom: 1px"><img src="https://sprentic.github.io/d3Org/Images/LevelSVG.svg" height="12px"></span>Grade: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
                 <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;"><img src="https://sprentic.github.io/d3Org/Images/TenureSvg.svg" height="12px"></span>Tenure: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
