@@ -27,15 +27,6 @@
     ></div>
 
     <script>
-      const mySvg = `
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" xml:space="preserve" height="12px">
-        <path style="fill:none;stroke:#716E7B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" d="M28 16h.16a9 9 0 0 1 8.672 6.591l2 7.197a2.2 2.2 0 0 1-1.68 2.745l-1.168.238M28 36h4v9a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2z"/>
-        <circle style="fill:none;stroke:#716E7B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" cx="26" cy="8" r="5"/>
-        <path style="fill:none;stroke:#716E7B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" d="M16 32V20.5c0-2.481 2.018-4.5 4.5-4.5.097 0 .175-.003.9 0 1.543.007 2.784.004 3.6 0v19-2 11.667"/>
-        <path style="fill:none;stroke:#716E7B;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10" d="M16 32a2 2 0 1 0 4 0m5 12.5a2.5 2.5 0 1 1-5 0V23m8-7v20h8.609L33 23"/>
-      </svg>
-    `;
-
       var chart;
       d3.csv(
         'https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv'
@@ -74,16 +65,16 @@
                 d.data.positionName
                 } </div>
                 <div style="padding: 3px 0px;color:#716E7B;font-size:9px;font-weight:400;">
-                 Boston - Seaport </div>
-                
+                Boston - Seaport </div>
+  
                </div>
               <div style="position: absolute; bottom: 8px; left: 8px; width: 90px; height: 30px; background-color: #eeedef; border-radius: 4px; padding: 4px 2px 0 2px;">
-                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;">${mySvg}</span>Grade: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
-                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;">${mySvg}</span>Tenure: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
+                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px; Margin-bottom: 1px"><img src="https://sprentic.github.io/d3Org/Images/LevelSvg.svg" height="12px"></span>Grade: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
+                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;"><img src="https://sprentic.github.io/d3Org/Images/LevelSvg.svg" height="12px"></span>Tenure: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
               </div>
               <div style="position: absolute; bottom: 8px; right: 8px; width: 90px; height: 30px; background-color: #eeedef; border-radius: 4px; padding: 4px 2px 0 2px;">
-                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;">${mySvg}</span>Team Size: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
-                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;">${mySvg}</span>Diversity: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
+                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px; Margin-bottom: 1px"><img src="https://sprentic.github.io/d3Org/Images/LevelSvg.svg" height="12px"></span>Team Size: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
+                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;"><img src="https://sprentic.github.io/d3Org/Images/LevelSvg.svg" height="12px"></span>Diversity: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
               </div>
       </div>
   `;
