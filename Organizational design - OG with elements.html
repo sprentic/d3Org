@@ -1,13 +1,20 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <!-- Include Google Fonts CSS for Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      /* Apply the Inter font to the entire body */
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
       body {
         font-family: 'Inter', sans-serif;
-        margin: 0;
       }
 
       .banner {
@@ -16,81 +23,213 @@
         background-image: url('https://sprentic.github.io/d3Org/Images/header.png');
         background-size: cover;
         background-position: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .sidebar {
+        position: relative;
+        top: 200px;
+        left: 0;
+        width: 300px;
+        background-color: #fafafa;
+        padding: 20px;
+        box-sizing: border-box;
+        transition: width 0.3s ease-in-out;
+        z-index: 2;
+      }
+
+      .sidebar.collapsed {
+        width: 50px;
+      }
+
+      .sidebar-controls {
+        position: absolute;
+        top: 50%;
+        right: -48px;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        z-index: 9999;
+        background-color: #fafafa;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 4px;
+      }
+
+      .sidebar-controls button {
+        width: 32px;
+        height: 32px;
+        background-color: #fafafa;
+        color: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        padding: 0;
+        transition: background-color 0.3s ease;
+      }
+
+      .sidebar-controls button:hover {
+        background-color: #f0f0f0;
+      }
+
+      .sidebar-controls button img {
+        width: 16px;
+        height: 16px;
+      }
+
+      .sidebar .sidebar-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .sidebar .sidebar-buttons button {
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #716E7B;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        text-align: left;
+        transition: background-color 0.3s ease;
+        width: 100%;
+      }
+
+      .sidebar .sidebar-buttons button:hover {
+        background-color: #666169;
+      }
+
+      .chart-container {
+        position: absolute;
+        top: 200px;
+        left: 300px;
+        right: 0;
+        bottom: 0;
+        background-color: #f6f6f6;
+        transition: left 0.3s ease-in-out;
+      }
+
+      .chart-container.expanded {
+        left: 50px;
       }
     </style>
   </head>
 
   <body>
     <div class="banner"></div>
-    <a
-      target="_blank"
-      href="https://github.com/bumbeishvili/d3-organization-chart"
-    >
-    </a>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3-org-chart@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3-flextree@2.1.2/build/d3-flextree.js"></script>
 
-    <div
-      class="chart-container"
-      style="height: 1200px; background-color: #f6f6f6"
-    ></div>
-
-    <script>
-      var chart;
-      d3.csv(
-        'https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv'
-      ).then((dataFlattened) => {
-        chart = new d3.OrgChart()
-          .container('.chart-container')
-          .data(dataFlattened)
-          .nodeWidth((d) => 225)
-          .initialZoom(0.7)
-          .nodeHeight((d) => 250)
-          .childrenMargin((d) => 40)
-          .compactMarginBetween((d) => 15)
-          .compactMarginPair((d) => 80)
-          .nodeContent(function (d, i, arr, state) {
-            return `
-            <div style="padding-top:30px;background-color:none;margin-left:1px;height:${
-              d.height
-            }px;border-radius:4px;overflow:visible">
-              <div style="height:${
-                d.height - 32
-              }px;padding-top:0px;background-color:white;border:1px solid #716E7B;border-radius:4px;">
-
-                <img src="${
-                d.data.imageUrl
-                }" style="position: absolute; top: 30%; left: ${d.width / 2 - 30}px; transform: translateY(+25%); border-radius:100px;width:60px;height:60px;" />
-
-               <div style="padding: 10px 20px; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, 20px); width: 100%;">
-                <div style="color:#716E7B;font-size:14px;font-weight:500"> ${
-                d.data.name
-                } </div>
-                <div style="color:#716E7B;font-size:9px;font-weight:400;margin-top:4px"> ${
-                d.data.positionName
-                } </div>
-                <div style="display: flex; justify-content: center; align-items: center; color:#716E7B;font-size:9px;font-weight:400;"><img src="https://sprentic.github.io/d3Org/Images/LocationSVG.svg" height="12px">
-                <span style="margin-left: 4px;">Boston - Seaport</span></div>
-  
-               </div>
-               <div style="position: absolute; top: 40px; right: 0; width: 150px; height: 24px; background-color: #00AB8E; padding-left: 20px; display: flex; align-items: center; color: white; font-size: 9px; font-weight: 400;">
-                CRM - Delivery
-               </div>
-               <img src="https://sprentic.github.io/d3Org/Images/spain2.svg" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); width:40px; height:35px;">
-              <div style="position: absolute; bottom: 8px; left: 8px; width: 90px; height: 30px; background-color: #eeedef; border-radius: 4px; padding: 4px 2px 0 2px;">
-                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px; Margin-bottom: 1px"><img src="https://sprentic.github.io/d3Org/Images/LevelSVG.svg" height="12px"></span>Grade: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
-                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;"><img src="https://sprentic.github.io/d3Org/Images/TenureSvg.svg" height="12px"></span>Tenure: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
-              </div>
-              <div style="position: absolute; bottom: 8px; right: 8px; width: 90px; height: 30px; background-color: #eeedef; border-radius: 4px; padding: 4px 2px 0 2px;">
-                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px; Margin-bottom: 1px"><img src="https://sprentic.github.io/d3Org/Images/TeamsizeSVG.svg" height="12px"></span>Team Size: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
-                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;"><span style="margin-right: 4px;"><img src="https://sprentic.github.io/d3Org/Images/DiversitySVG.svg" height="12px"></span>Diversity: <span style="font-weight: bold;">${d.data._directSubordinates}</span></div>
-              </div>
+    <div class="sidebar">
+      <div class="sidebar-controls">
+        <button id="expand-sidebar">
+          <img src="https://sprentic.github.io/d3Org/Images/show-sidepanel.svg" alt="Show sidebar">
+        </button>
+        <button id="collapse-sidebar">
+          <img src="https://sprentic.github.io/d3Org/Images/hide-sidepanel.svg" alt="Hide sidebar">
+        </button>
       </div>
-  `;
-          })
-          .render();
-      });
-    </script>
+      <div class="sidebar-buttons">
+        <button>Alpha</button>
+        <button>Beta</button>
+        <button>Gamma</button>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <script src="https://d3js.org/d3.v7.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/d3-org-chart@2"></script>
+      <script src="https://cdn.jsdelivr.net/npm/d3-flextree@2.1.2/build/d3-flextree.js"></script>
+
+      <script>
+        var chart;
+
+        d3.csv(
+          'https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv'
+        ).then((dataFlattened) => {
+          chart = new d3.OrgChart()
+            .container('.chart-container')
+            .data(dataFlattened)
+            .nodeWidth((d) => 225)
+            .initialZoom(0.7)
+            .nodeHeight((d) => 250)
+            .childrenMargin((d) => 40)
+            .compactMarginBetween((d) => 15)
+            .compactMarginPair((d) => 80)
+            .nodeContent(function (d, i, arr, state) {
+              return `
+            <div style="padding-top:30px;background-color:none;margin-left:1px;height:${d.height}px;border-radius:4px;overflow:visible">
+              <div style="height:${d.height - 32}px;padding-top:0px;background-color:white;border:1px solid #716E7B;border-radius:4px;">
+                <img src="${d.data.imageUrl}" style="position: absolute; top: 30%; left: ${
+                d.width / 2 - 30
+                }px; transform: translateY(+25%); border-radius:100px;width:60px;height:60px;" />
+
+                <div style="padding: 10px 20px; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, 20px); width: 100%;">
+                <div style="color:#716E7B;font-size:14px;font-weight:500"> ${d.data.name} </div>
+                <div style="color:#716E7B;font-size:9px;font-weight:400;margin-top:4px"> ${d.data.positionName} </div>
+                <div style="display: flex; justify-content: center; align-items: center; color:#716E7B;font-size:9px;font-weight:400;">
+                <img src="https://sprentic.github.io/d3Org/Images/LocationSVG.svg" height="12px">
+                <span style="margin-left: 4px;">Boston - Seaport</span>
+                </div>
+                </div>
+
+                <div style="position: absolute; top: 40px; right: 0; width: 150px; height: 24px; background-color: #00AB8E; padding-left: 20px; display: flex; align-items: center; color: white; font-size: 9px; font-weight: 400;">
+                CRM - Delivery
+                </div>
+
+                <img src="https://sprentic.github.io/d3Org/Images/spain2.svg" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); width:40px; height:35px;">
+
+                <div style="position: absolute; bottom: 8px; left: 8px; width: 90px; height: 30px; background-color: #eeedef; border-radius: 4px; padding: 4px 2px 0 2px;">
+                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;">
+                <span style="margin-right: 4px; Margin-bottom: 1px">
+                <img src="https://sprentic.github.io/d3Org/Images/LevelSVG.svg" height="12px">
+                </span>
+                Grade: <span style="font-weight: bold;">${d.data._directSubordinates}</span>
+                </div>
+                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;">
+                <span style="margin-right: 4px;">
+                <img src="https://sprentic.github.io/d3Org/Images/TenureSvg.svg" height="12px">
+                </span>
+                Tenure: <span style="font-weight: bold;">${d.data._directSubordinates}</span>
+                </div>
+                </div>
+
+                <div style="position: absolute; bottom: 8px; right: 8px; width: 90px; height: 30px; background-color: #eeedef; border-radius: 4px; padding: 4px 2px 0 2px;">
+                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;">
+                <span style="margin-right: 4px; Margin-bottom: 1px">
+                <img src="https://sprentic.github.io/d3Org/Images/TeamsizeSVG.svg" height="12px">
+                </span>
+                Team Size: <span style="font-weight: bold;">${d.data._directSubordinates}</span>
+                </div>
+                <div style="display: flex; align-items: center; font-size: 9px; font-weight: 300; color: #716E7B;">
+                <span style="margin-right: 4px;">
+                <img src="https://sprentic.github.io/d3Org/Images/DiversitySVG.svg" height="12px">
+                </span>
+                Diversity: <span style="font-weight: bold;">${d.data._directSubordinates}</span>
+                </div>
+                </div>
+              </div>
+            </div>
+          `;
+            })
+            .render();
+        });
+
+        document.getElementById('expand-sidebar').addEventListener('click', () => {
+          document.querySelector('.sidebar').classList.remove('collapsed');
+          document.querySelector('.chart-container').classList.remove('expanded');
+        });
+
+        document.getElementById('collapse-sidebar').addEventListener('click', () => {
+          document.querySelector('.sidebar').classList.add('collapsed');
+          document.querySelector('.chart-container').classList.add('expanded');
+        });
+      </script>
+    </div>
   </body>
 </html>
