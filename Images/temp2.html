@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+      }
+
+      .banner {
+        width: 100%;
+        height: 200px;
+        background-image: url('https://sprentic.github.io/d3Org/Images/header.png');
+        background-size: cover;
+        background-position: center;
+      }
+
+      .sidebar {
+        position: absolute;
+        top: 200px;
+        left: 0;
+        width: 300px;
+        background-color: #f6f6f6;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .chart-container {
+        position: absolute;
+        top: 200px;
+        left: 300px;
+        right: 0;
+        bottom: 0;
+        background-color: #f6f6f6;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="banner"></div>
+    <div class="sidebar">
+      <!-- Sidebar content goes here -->
+    </div>
+    <div class="chart-container">
+      <script src="https://d3js.org/d3.v7.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/d3-org-chart@2"></script>
+      <script src="https://cdn.jsdelivr.net/npm/d3-flextree@2.1.2/build/d3-flextree.js"></script>
+
+      <script>
+        var chart;
+        d3.csv(
+          'https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv'
+        ).then((dataFlattened) => {
+          chart = new d3.OrgChart()
+            .container('.chart-container')
+            .data(dataFlattened)
+            .nodeWidth((d) => 225)
+            .initialZoom(0.7)
+            .nodeHeight((d) => 250)
+            .childrenMargin((d) => 40)
+            .compactMarginBetween((d) => 15)
+            .compactMarginPair((d) => 80)
+            .nodeContent(function (d, i, arr, state) {
+              // ... (your existing node content code)
+            })
+            .render();
+        });
+      </script>
+    </div>
+  </body>
+</html>
