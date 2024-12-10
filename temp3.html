@@ -1,7 +1,9 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
       body {
         font-family: 'Inter', sans-serif;
@@ -24,6 +26,34 @@
         background-color: #f6f6f6;
         padding: 20px;
         box-sizing: border-box;
+        transition: width 0.3s ease-in-out;
+      }
+
+      .sidebar.collapsed {
+        width: 50px;
+      }
+
+      .sidebar-controls {
+        position: absolute;
+        top: 50%;
+        right: -48px;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .sidebar-controls button {
+        width: 24px;
+        height: 24px;
+        background-color: #716E7B;
+        color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 14px;
       }
 
       .chart-container {
@@ -33,6 +63,11 @@
         right: 0;
         bottom: 0;
         background-color: #f6f6f6;
+        transition: left 0.3s ease-in-out;
+      }
+
+      .chart-container.expanded {
+        left: 50px;
       }
     </style>
   </head>
@@ -42,13 +77,24 @@
     <div class="sidebar">
       <!-- Sidebar content goes here -->
     </div>
+    <div class="sidebar-controls">
+      <button id="expand-sidebar">
+        <i class="fas fa-angle-right"></i>
+      </button>
+      <button id="collapse-sidebar">
+        <i class="fas fa-angle-left"></i>
+      </button>
+    </div>
     <div class="chart-container">
       <script src="https://d3js.org/d3.v7.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3-org-chart@2"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3-flextree@2.1.2/build/d3-flextree.js"></script>
+      <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
 
       <script>
         var chart;
+        var isSidebarCollapsed = false;
+
         d3.csv(
           'https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv'
         ).then((dataFlattened) => {
@@ -101,6 +147,16 @@
   `;
             })
             .render();
+        });
+
+        document.getElementById('expand-sidebar').addEventListener('click', () => {
+          document.querySelector('.sidebar').classList.remove('collapsed');
+          document.querySelector('.chart-container').classList.remove('expanded');
+        });
+
+        document.getElementById('collapse-sidebar').addEventListener('click', () => {
+          document.querySelector('.sidebar').classList.add('collapsed');
+          document.querySelector('.chart-container').classList.add('expanded');
         });
       </script>
     </div>
