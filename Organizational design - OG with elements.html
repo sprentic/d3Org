@@ -17,7 +17,7 @@
 
     .banner {
       width: 100%;
-      height: 200px;
+      height: 250px;
       background-image: url('https://sprentic.github.io/d3Org/Images/header.png');
       background-size: cover;
       background-position: center;
@@ -25,96 +25,10 @@
       z-index: 1;
     }
 
-    .sidebar {
-      position: fixed;
-      top: 200px;
-      left: 0;
-      bottom: 0;
-      width: 300px;
-      background-color: #ededed;
-      padding: 20px;
-      box-sizing: border-box;
-      transition: width 0.3s ease-in-out;
-      border-right: 1px solid #ccc;
-      overflow: hidden;
-      z-index: 9998;
-    }
-
-    .sidebar.collapsed {
-      width: 60px;
-    }
-
-    .sidebar-tab {
-      position: absolute;
-      top: 10%;
-      transform: translateY(-50%);
-      right: 10px; /* Adjust the position to be on top of the border line */
-      width: 40px;
-      height: 40px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 9999;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .sidebar-tab img {
-      width: 24px;
-      height: 24px;
-      display: block;
-    }
-
-    /* Default (expanded) state: show the hide-sidepanel icon, hide the show-sidepanel icon */
-    .icon-hide {
-      display: block !important;
-    }
-    .icon-show {
-      display: none !important;
-    }
-
-    /* Collapsed state: show the show-sidepanel icon, hide the hide-sidepanel icon */
-    .sidebar.collapsed .icon-show {
-      display: block !important;
-    }
-    .sidebar.collapsed .icon-hide {
-      display: none !important;
-    }
-
-    .sidebar-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 50px;
-    }
-
-    .sidebar-buttons button {
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-      background-color: #716E7B;
-      color: white;
-      font-size: 14px;
-      cursor: pointer;
-      text-align: left;
-      transition: background-color 0.3s ease;
-      width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .sidebar-buttons button:hover {
-      background-color: #666169;
-    }
-
     .chart-container {
       position: absolute;
-      top: 200px;
-      left: 300px;
+      top: 260px;
+      left: 100px;
       right: 0;
       bottom: 0;
       background-color: #fafafa;
@@ -122,8 +36,21 @@
       z-index: 1;
     }
 
-    .chart-container.expanded {
-      left: 50px;
+    .action-buttons {
+      position: fixed;
+      top: 300px;
+      left: 10px;
+      z-index: 10;
+    }
+
+    .btn {
+      margin: 5px;
+      padding: 5px 10px;
+      background-color: #00AB8E;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -131,32 +58,47 @@
 <body>
   <div class="banner"></div>
 
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-tab" id="toggle-sidebar">
-      <img class="icon-hide" src="https://sprentic.github.io/d3Org/Images/hide-sidepanel.svg" alt="Hide sidebar">
-      <img class="icon-show" src="https://sprentic.github.io/d3Org/Images/show-sidepanel.svg" alt="Show sidebar">
-    </div>
-    <div class="sidebar-buttons">
-      <button>Beta</button>
-      <button>Gamma</button>
-      <button
-        onclick="chart.expandAll()"
-        class="btn btn-action-button waves-effect waves-light"
-      >
-        <i class="fas fa-angle-double-down"></i> expand all</button
-      ><br />
-
-    </div>
-  </div>
-
   <div class="chart-container" id="chart-container">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3-org-chart@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3-flextree@2.1.2/build/d3-flextree.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <script>
+      // Global variables to track state
+      let chart;
+      let compact = 0;
+      let index = 0;
+
+      // Function to download PDF (using jsPDF)
+      function downloadPdf() {
+        if (chart) {
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF();
+          const svg = document.querySelector('.chart-container svg');
+          
+          // Convert SVG to image
+          const svgData = new XMLSerializer().serializeToString(svg);
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const img = new Image();
+          
+          img.onload = function() {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            const imgData = canvas.toDataURL('image/png');
+            doc.addImage(imgData, 'PNG', 10, 10, 190, 277);
+            doc.save('org-chart.pdf');
+          };
+          
+          img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+        }
+      }
+
+      // Load data and create chart
       d3.csv('https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv').then((dataFlattened) => {
-        var chart = new d3.OrgChart()
+        chart = new d3.OrgChart()
           .container('.chart-container')
           .data(dataFlattened)
           .nodeWidth((d) => 225)
@@ -221,19 +163,82 @@
           })
           .render();
       });
-
-      document.getElementById('toggle-sidebar').addEventListener('click', () => {
-        let sidebar = document.getElementById('sidebar');
-        let chartContainer = document.getElementById('chart-container');
-        if (sidebar.classList.contains('collapsed')) {
-          sidebar.classList.remove('collapsed');
-          chartContainer.classList.remove('expanded');
-        } else {
-          sidebar.classList.add('collapsed');
-          chartContainer.classList.add('expanded');
-        }
-      });
     </script>
+  </div>
+  <div class="action-buttons">
+    <button
+      onclick='chart.setExpanded("O-6164").render()'
+      class="btn btn-action-button"
+    >
+      <i class="fas fa-chevron-down"></i> Expand
+    </button>
+    <br />
+    
+    <button
+      onclick='chart.layout(["right","bottom","left","top"][index++%4]).render().fit()'
+      class="btn btn-action-button"
+    >
+      <i class="fas fa-retweet"></i> swap
+    </button>
+    <br />
+
+    <button
+      onclick="chart.compact(!!(compact++%2)).render().fit()"
+      class="btn btn-action-button"
+    >
+      <i class="fas fa-sitemap"></i> compact
+    </button>
+    <br />
+    
+    <button
+      onclick="chart.fullscreen('body')"
+      class="btn btn-action-button"
+    >
+      <i class="fas fa-expand"></i> fullscreen</button
+    ><br />
+
+    <button
+      onclick="chart.exportSvg()"
+      class="btn btn-action-button"
+    >
+      <i class="fas fa-file-download"></i> export svg
+    </button>
+    <br />
+    <button
+      onclick="chart.expandAll()"
+      class="btn btn-action-button"
+    >
+      <i class="fas fa-angle-double-down"></i> expand all</button
+    ><br />
+
+    <button
+      onclick="chart.collapseAll()"
+      class="btn btn-action-button"
+    >
+      <i class="fas fa-angle-double-up"></i> collapse all</button
+    ><br />
+
+    <button
+      onclick="downloadPdf()"
+      class="btn btn-action-button"
+    >
+      <i class="far fa-file-pdf"></i> export pdf
+    </button>
+    <br />
+
+    <button
+      onclick="chart.zoomOut()"
+      class="btn btn-action-button"
+    >
+      <i class="fas fa-minus"></i> zoom out</button
+    ><br />
+    <button
+      onclick="chart.zoomIn()"
+      class="btn btn-action-button"
+    >
+      <i class="fas fa-plus"></i> zoom in
+    </button>
+    <br />
   </div>
 </body>
 </html>
